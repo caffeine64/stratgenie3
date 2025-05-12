@@ -1,10 +1,8 @@
-const API_KEY = 'sk-xxxxx'; // Replace with your OpenAI key
-
 document.getElementById("generate").addEventListener("click", async () => {
   const brief = document.getElementById("brief").value.trim();
   const output = document.getElementById("output");
   const errorBox = document.getElementById("error");
-  
+
   output.textContent = "";
   errorBox.textContent = "";
 
@@ -14,31 +12,25 @@ document.getElementById("generate").addEventListener("click", async () => {
   }
 
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://punter.fly.dev/stratgenie", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${API_KEY}`
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-4",
-        messages: [
-          {
-            role: "system",
-            content: "You are a senior brand strategist who thinks deeply, creatively, and clearly. Provide detailed strategic thinking, not surface-level output."
-          },
-          {
-            role: "user",
-            content: `Here's the creative brief:\n${brief}\n\nPlease respond with detailed strategy thinking, including: 1. Insight, 2. Strategy, 3. Big Idea, 4. Positioning line options, 5. Campaign roll-out, 6. Content ideas.`
-          }
-        ]
+        prompt: `Creative Brief:\n\n${brief}\n\nRespond with:\n1. Cultural Insight\n2. Strategic Idea\n3. Positioning Lines (3 options)\n4. Campaign Platform\n5. Roll-Out Plan\n6. Content Concepts\n\nKeep it smart, sharp, and inventive. No fluff.`
       })
     });
 
     const data = await response.json();
-    output.textContent = data.choices?.[0]?.message?.content || "⚠️ No content received.";
+
+    if (data?.output) {
+      output.textContent = data.output;
+    } else {
+      throw new Error("No response from Punter.");
+    }
   } catch (err) {
     console.error(err);
-    errorBox.textContent = "❌ Error connecting to OpenAI.";
+    errorBox.textContent = "❌ Could not connect to the AI server. Try again later.";
   }
 });
