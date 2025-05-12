@@ -18,7 +18,19 @@ document.getElementById("generate").addEventListener("click", async () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        prompt: `Creative Brief:\n\n${brief}\n\nRespond with:\n1. Cultural Insight\n2. Strategic Idea\n3. Positioning Lines (3 options)\n4. Campaign Platform\n5. Roll-Out Plan\n6. Content Concepts\n\nKeep it smart, sharp, and inventive. No fluff.`
+        prompt: `You're a senior brand strategist responding to the following creative brief:
+
+${brief}
+
+Please provide:
+1. Cultural Insight
+2. Strategic Idea
+3. Three Positioning Line Options
+4. Campaign Platform
+5. Roll-Out Plan
+6. Content Concepts
+
+Be inventive, poetic, and strategic. Avoid generic lines. Respond with clarity and originality.`
       })
     });
 
@@ -27,10 +39,10 @@ document.getElementById("generate").addEventListener("click", async () => {
     if (data?.output) {
       output.textContent = data.output;
     } else {
-      throw new Error("No response from Punter.");
+      throw new Error("No AI response received.");
     }
   } catch (err) {
     console.error(err);
-    errorBox.textContent = "❌ Could not connect to the AI server. Try again later.";
+    errorBox.textContent = "❌ Could not connect to AI server.";
   }
 });
