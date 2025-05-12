@@ -12,19 +12,18 @@ document.getElementById("generate").addEventListener("click", async () => {
     return;
   }
 
-  // Show loading state
   output.textContent = "🤔 Thinking...";
   button.disabled = true;
   button.textContent = "Thinking...";
 
   try {
-    const response = await fetch("https://stratgenie-ai.vercel.app/api/stratgenie", {
+    const response = await fetch("https://stratgenie-gpt.vercel.app/api/stratgenie", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        prompt: `You're a senior brand strategist responding to the following creative brief:\n\n${brief}\n\nPlease provide:\n1. Cultural Insight\n2. Strategic Idea\n3. Three Positioning Line Options\n4. Campaign Platform\n5. Roll-Out Plan\n6. Content Concepts\n\nBe inventive, poetic, and strategic. Avoid generic lines.`
+        prompt: `You're a senior brand strategist responding to this creative brief:\n\n${brief}\n\nPlease provide:\n1. Cultural Insight\n2. Strategic Idea\n3. Three Positioning Line Options\n4. Campaign Platform\n5. Roll-Out Plan\n6. Content Concepts\n\nBe inventive, poetic, strategic, and never generic.`
       })
     });
 
@@ -36,8 +35,8 @@ document.getElementById("generate").addEventListener("click", async () => {
       throw new Error("Empty AI response.");
     }
   } catch (err) {
-    console.error(err);
-    errorBox.textContent = "❌ Could not connect to AI server.";
+    console.error("Error:", err);
+    errorBox.textContent = "❌ Could not connect to the AI server.";
     output.textContent = "";
   } finally {
     button.disabled = false;
