@@ -4,23 +4,21 @@ document.getElementById("generate").addEventListener("click", async () => {
   const errorBox = document.getElementById("error");
   const button = document.getElementById("generate");
 
-  // Clear previous results
   output.textContent = "";
   errorBox.textContent = "";
 
-  // Validate input
   if (!brief) {
     errorBox.textContent = "❌ Please enter a creative brief first.";
     return;
   }
 
-  // UI feedback: show loading
+  // Show loading state
   output.textContent = "🤔 Thinking...";
   button.disabled = true;
   button.textContent = "Thinking...";
 
   try {
-    const response = await fetch("https://punter.fly.dev/stratgenie", {
+    const response = await fetch("https://stratgenie-ai.vercel.app/api/stratgenie", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -38,11 +36,10 @@ document.getElementById("generate").addEventListener("click", async () => {
       throw new Error("Empty AI response.");
     }
   } catch (err) {
-    console.error("AI call failed:", err);
+    console.error(err);
     errorBox.textContent = "❌ Could not connect to AI server.";
     output.textContent = "";
   } finally {
-    // Reset button
     button.disabled = false;
     button.textContent = "Generate Strategic Ideas";
   }
