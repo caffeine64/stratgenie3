@@ -31,19 +31,21 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  background: #0041cc;
+button:disabled {
+  background: #7fa6ff;
+  cursor: wait;
 }
 
-#error {
+.error {
   color: red;
   margin-top: 1rem;
 }
 
-#output {
+.output {
   margin-top: 2rem;
   padding: 1rem;
   background: #e7f3ff;
   border-left: 4px solid #0057ff;
   white-space: pre-wrap;
+  font-family: monospace;
 }
